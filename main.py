@@ -10,6 +10,7 @@ def start(m, res=False):
 # Получение сообщений от юзера
 @bot.message_handler(content_types=["text"])
 def handle_text(message):
+    #тут будет отправка полученого сообщения в БД
     bot.send_message(message.chat.id, 'Вы написали: ' + message.text)
 
 # Запускаем бота

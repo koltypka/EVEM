@@ -14,7 +14,7 @@ def handle_text(message):
     #тут будет отправка полученого сообщения в БД
     bot.send_message(message.chat.id, 'Вы написали:')
 
-    for text in message.text.split():
+    for text in message.text.lower().split():
         bot.send_message(message.chat.id, text)
 
 # Запускаем бота

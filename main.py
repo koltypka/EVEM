@@ -1,21 +1,47 @@
 import telebot
+import yaml
+from yaml.loader import SafeLoader
+
+#получаем параметры из yaml файла
+with open('parameters.yaml') as f:
+    parametrs = yaml.load(f, Loader=SafeLoader)
+
 # Создаем экземпляр бота
-token = open('token.txt', 'r').read()
-bot = telebot.TeleBot(token)
+EVEM = telebot.TeleBot(parametrs['token'])
 
 # Функция, обрабатывающая команду /start
-@bot.message_handler(commands=["start"])
+@EVEM.message_handler(commands=["start"])
 def start(m, res=False):
-    bot.send_message(m.chat.id, 'Я на связи. Напиши мне что-нибудь )')
+    EVEM.send_message(m.chat.id, 'Я на связи. Напиши мне что-нибудь )')
+
+# Функция, обрабатывающая команду /bad
+@EVEM.message_handler(commands=["bad"])
+def bad(m, res=False):
+    if m.chat.id in parametrs['TestIds']:
+        EVEM.send_message(m.chat.id, 'ответ плохой, исправляюсь(')
+
+# Функция, обрабатывающая команду /ok
+@EVEM.message_handler(commands=["ok"])
+def ok(m, res=False):
+    if m.chat.id in parametrs['TestIds']:
+        EVEM.send_message(m.chat.id, 'ответ принят, стараюсь в том же духе!')
+
+# Функция, обрабатывающая команду /myId
+@EVEM.message_handler(commands=["myId"])
+def myId(m, res=False):
+    EVEM.send_message(m.chat.id, 'Ваш ID: ' + str(m.chat.id))
 
 # Получение сообщений от юзера
-@bot.message_handler(content_types=["text"])
-def handle_text(message):
-    #тут будет отправка полученого сообщения в БД
-    bot.send_message(message.chat.id, 'Вы написали:')
+@EVEM.message_handler(content_types=["text"])
+def handle_text(m):
+    if m.chat.id in parametrs['TestIds']:
+        EVEM.send_message(m.chat.id, 'вы админ')
+    else :
+        #тут будет отправка полученого сообщения в БД
+        EVEM.send_message(m.chat.id, 'Вы написали:')
 
-    for text in message.text.lower().split():
-        bot.send_message(message.chat.id, text)
+    for text in m.text.lower().split():
+        EVEM.send_message(m.chat.id, text)
 
 # Запускаем бота
-bot.polling(none_stop=True, interval=0)
+EVEM.polling(none_stop=True, interval=0)

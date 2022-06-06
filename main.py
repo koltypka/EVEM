@@ -29,7 +29,8 @@ def ok(m, res=False):
 # Функция, обрабатывающая команду /myId
 @EVEM.message_handler(commands=["myId"])
 def myId(m, res=False):
-    EVEM.send_message(m.chat.id, 'Ваш ID: ' + str(m.chat.id))
+    if parametrs['idCheck']:
+        EVEM.send_message(m.chat.id, 'Ваш ID: ' + str(m.chat.id))
 
 # Получение сообщений от юзера
 @EVEM.message_handler(content_types=["text"])

@@ -1,10 +1,13 @@
 import telebot
 import yaml
+import SQL
 from yaml.loader import SafeLoader
 
 #получаем параметры из yaml файла
 with open('parameters.yaml') as f:
     parametrs = yaml.load(f, Loader=SafeLoader)
+
+connection = SQL.getConnection()
 
 # Создаем экземпляр бота
 EVEM = telebot.TeleBot(parametrs['token'])
@@ -37,7 +40,7 @@ def myId(m, res=False):
 def handle_text(m):
     if m.chat.id in parametrs['TestIds']:
         EVEM.send_message(m.chat.id, 'вы админ')
-    else :
+    else:
         #тут будет отправка полученого сообщения в БД
         EVEM.send_message(m.chat.id, 'Вы написали:')
 

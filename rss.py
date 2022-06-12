@@ -20,9 +20,9 @@ def save_json_file(article_list, filename='news.json'):
         json.dump(article_list, outfile, ensure_ascii=False, indent=4)
 
 
-def supchik():  # возвращает суп
+def supchik(url):  # возвращает суп
     try:
-        url = "https://tverigrad.ru/rss/rssfeed.php?ftype=all"
+        url = url
         source = requests.get(url)
         soup = BS(source.content, features="xml")
     except Exception as ex:
@@ -30,8 +30,8 @@ def supchik():  # возвращает суп
         print(ex)
     return soup
 
-
-def get_content(soup=supchik()):  # словарь суп
+#получает все новости
+def get_content(soup):  # словарь суп
     article_list = []
     try:
         articles = soup.findAll('item')
@@ -60,7 +60,8 @@ def get_content(soup=supchik()):  # словарь суп
         print(e)
 
 
-def get_content_one(soup=supchik()):
+# получает на вход суп
+def get_content_one(soup):
     aarticle_list = []
     try:
         aa = soup.find('item')
@@ -89,12 +90,17 @@ def get_content_one(soup=supchik()):
         print(e)
 
 def get_all_rss_news(key_word):
-    aarticle_list = SQL.getContent();
-    if  not aarticle_list:
+    aarticle_list = SQL.getContent(key_word)
+    if  len(aarticle_list) < 5:
         list_RSS = yamlReader.getYamlFile('RSS.yaml')
         for RSS_link in list_RSS:
-            aarticle_list.append(get_content_one(RSS_link))
-    return aarticle_list;
+            aarticle_list.append(
+                get_content(
+                    supchik(RSS_link)))
+
+            if len(aarticle_list) > 5:
+                break
+    return aarticle_list
 
 if __name__ == '__main__':
     # s = supchik()
@@ -104,7 +110,8 @@ if __name__ == '__main__':
     #
     # d = get_content(s)  # dictionary
     # print(d)
-    print(get_content_one())  # dictionary
+    # print(get_content_one())  # dictionary
+    print(get_all_rss_news('word'))  # dictionary
     # j = json.dumps(d, ensure_ascii=False, indent=4)  # json
     # print(j)
     #

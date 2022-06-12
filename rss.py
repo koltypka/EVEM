@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup as BS
 import json
+import SQL
+import yamlReader
 
 
 def get_File_Data(FileName):  # возвращает текст файла
@@ -86,6 +88,13 @@ def get_content_one(soup=supchik()):
         print("ЖОПА get_content_one")
         print(e)
 
+def get_all_rss_news(key_word):
+    aarticle_list = SQL.getContent();
+    if  not aarticle_list:
+        list_RSS = yamlReader.getYamlFile('RSS.yaml')
+        for RSS_link in list_RSS:
+            aarticle_list.append(get_content_one(RSS_link))
+    return aarticle_list;
 
 if __name__ == '__main__':
     # s = supchik()

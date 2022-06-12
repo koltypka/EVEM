@@ -1,11 +1,9 @@
 import telebot
-import yaml
 import SQL
-from yaml.loader import SafeLoader
+import yamlReader
 
 #получаем параметры из yaml файла
-with open('parameters.yaml') as f:
-    parametrs = yaml.load(f, Loader=SafeLoader)
+parametrs = yamlReader.getYamlFile('parameters.yaml')
 
 connection = SQL.getConnection()
 

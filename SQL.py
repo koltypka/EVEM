@@ -16,3 +16,9 @@ def getConnection():
 
 def getContent(keyWord):
     return [];
+
+# Функция возвращает динамический запрос на добавление элемента в базу данных
+def Dynamic_query(WORD, NEWS_1, NEWS_2, NEWS_3, NEWS_4, NEWS_5):
+    requesting = "INSERT INTO INPUT_WORD (WORD, NEWS_1, NEWS_2, NEWS_3, NEWS_4, NEWS_5) VALUES ("
+    reque = requesting +"'"+ WORD +"', " +"'"+ NEWS_1 +"', " +"'"+ NEWS_2+"', "+"'" + NEWS_3+"', "+"'"+ NEWS_4 +"', "+"'"+ NEWS_5 + ');'
+    return reque

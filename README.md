@@ -24,9 +24,6 @@ $ git clone https://github.com/koltypka/EVEM.git
 ```
 2) Не выходя из текущей директории пропишите:
 ```
-$ git clone https://github.com/eternnoir/pyTelegramBotAPI.git
-$ cd pyTelegramBotAPI
-$ python setup.py install
 $ pip install -r requirements.txt 
 ```
 3) Бот готов к запуску!

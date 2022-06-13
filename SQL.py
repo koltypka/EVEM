@@ -36,23 +36,60 @@ def SQLQuery(query):
 def getContent(WORD):
     if WORD:
         request = "SELECT * FROM INPUT_WORD WHERE WORD = '" + WORD + "'"
-        return SQLQuery(request)
+        SQLanswer = SQLQuery(request)
+        return SQLanswer[0] if SQLanswer else []
 
 # Функция возвращает динамический запрос на добавление элемента в базу данных
 def insertQuery(WORD, NEWS_LIST):
     if WORD:
         INSERT = "INSERT INTO INPUT_WORD (WORD"
         VALUES = "VALUES ('" + WORD + "'"
-
         n = 1;
         for news in NEWS_LIST:
             if news:
                 INSERT = INSERT + ", NEWS_" + str(n)
                 VALUES = VALUES + ", '" + str(news) + "'"
-            n = n+1
+            n = n + 1
         request = INSERT + ") " + VALUES + ");"
         return SQLQuery(request)
 
+# Функция возвращает динамический запрос на добавление элемента в базу данных
+def updateQuery(WORD, NEWS_LIST):
+    if WORD:
+        UPDATE = "UPDATE INPUT_WORD SET"
+        #VALUES = "VALUES ('" + WORD + "'"
+        n = 1;
+        for news in NEWS_LIST:
+            if news:
+                if n > 1:
+                    UPDATE = UPDATE + ','
+                UPDATE = UPDATE + " NEWS_" + str(n) + " = " + "'" + str(news) + "'"
+            n = n + 1
+        request = UPDATE + "WHERE WORD = '" + WORD + "'"
+        return SQLQuery(request)
+
+#функция вызывается при запосе пользователя
+def addRequest(WORD, NEWS_LIST):
+    if WORD:
+        newsList = getContent(WORD)
+        counter = 0
+        oldNewsList = []
+
+        for i in range(5):
+            if newsList['NEWS_' + i]:
+                counter = counter + 1
+                oldNewsList.append(newsList['NEWS_' + i])
+
+        if NEWS_LIST.lenght < counter:
+            newsLeftToAdd = counter - NEWS_LIST.lenght
+            for oldNews in oldNewsList:
+                if not newsLeftToAdd:
+                    break
+                NEWS_LIST.append(oldNews)
+        else:
+            return insertQuery(WORD, NEWS_LIST)
+
 if __name__ == '__main__':
-    #print(insertQuery('ещё запрос', {'{ddddd}', '{3333}'}))  # dictionary
-    #print(getContent('дед'))  # dictionary
+    #print(insertQuery('Новости сегодня', {'{ddddd}', '{3333}'}))  # dictionary
+    #print(getContent('выы сегодня'))  # dictionary
+    #print(updateQuery('Новости сегодня', {'{ddddd}', '{3333}'}))

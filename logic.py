@@ -23,17 +23,17 @@ def search_news(word, url="https://tverigrad.ru/rss/rssfeed.php?ftype=all", leve
 
 
     if len(L_news) < 5:
-        try:
-            bd_content = SQL.getContent(word)
-            print(bd_content)
-            for i in range(1, 6):
-                if bd_content['NEWS_'+str(i)] != '':
-                    bd_news = json.loads(bd_content['NEWS_'+str(i)])
-                    L_news.append(bd_news)
+        #try:
+        bd_content = SQL.getContent(word)
+        print(bd_content)
+        for i in range(1, 6):
+            if bd_content['NEWS_'+str(i)] != '':
+                bd_news = json.loads(bd_content['NEWS_'+str(i)])
+                L_news.append(bd_news)
 
-        except Exception as e:
-            print("error search_news")
-            print(e)
+        #except Exception as e:
+            #print("error search_news")
+            #print(e)
 
 
     L_add = []

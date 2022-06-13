@@ -4,21 +4,17 @@ import json
 import SQL
 import yamlReader
 
-
 def get_File_Data(FileName):  # возвращает текст файла
     with open(FileName, "r", encoding="utf-8") as f:
         return f.read()
-
 
 def write_file_HTML(text, FileName="pupa.html"):  # запись в файл
     with open(FileName, "w", encoding="utf-8") as f:
         print(text, file=f)
 
-
 def save_json_file(article_list, filename='news.json'):
     with open(filename, 'w', encoding="utf-8") as outfile:
         json.dump(article_list, outfile, ensure_ascii=False, indent=4)
-
 
 def supchik(url):  # возвращает суп
     try:
@@ -26,7 +22,7 @@ def supchik(url):  # возвращает суп
         source = requests.get(url)
         soup = BS(source.content, features="xml")
     except Exception as ex:
-        print("ЖОПА supchik")
+        print("ошибка supchik")
         print(ex)
     return soup
 
@@ -47,16 +43,14 @@ def get_content(soup):  # словарь суп
                 'title': title,
                 'description': description,
                 'link': link,
-
                 'pubDate': pubDate
-
             }
             article_list.append(article)
 
         return article_list
 
     except Exception as e:
-        print("ЖОПА get_content")
+        print("ошибка get_content")
         print(e)
 
 
@@ -77,16 +71,14 @@ def get_content_one(soup):
             'title': title,
             'description': description,
             'link': link,
-
             'pubDate': pubDate
-
         }
         aarticle_list.append(aarticle)
 
         return aarticle_list
 
     except Exception as e:
-        print("ЖОПА get_content_one")
+        print("ошибка get_content_one")
         print(e)
 
 def get_all_rss_news(key_word):

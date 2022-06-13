@@ -14,6 +14,7 @@ def getConnection():
                      cursorclass=pymysql.cursors.DictCursor)
     return connection
 
+#запрос в БД
 def SQLQuery(query):
     connection = getConnection()
     result = []
@@ -31,15 +32,16 @@ def SQLQuery(query):
     finally:
         connection.close()
 
-    return  result
+    return result
 
+#получение элемента из БД по запросу
 def getContent(WORD):
     if WORD:
         request = "SELECT * FROM INPUT_WORD WHERE WORD = '" + WORD + "'"
         SQLanswer = SQLQuery(request)
         return SQLanswer[0] if SQLanswer else []
 
-# Функция возвращает динамический запрос на добавление элемента в базу данных
+# Функция возвращает динамический запрос на добавление элемента в БЛ
 def insertQuery(WORD, NEWS_LIST):
     if WORD:
         INSERT = "INSERT INTO INPUT_WORD (WORD"
@@ -53,21 +55,25 @@ def insertQuery(WORD, NEWS_LIST):
         request = INSERT + ") " + VALUES + ");"
         return SQLQuery(request)
 
-# Функция возвращает динамический запрос на добавление элемента в базу данных
+# Функция возвращает динамический запрос на обновления свойств элемента в БД
 def updateQuery(WORD, NEWS_LIST):
     if WORD:
         UPDATE = "UPDATE INPUT_WORD SET"
-        n = 1;
+        n = 0;
         for news in NEWS_LIST:
-            if news:
-                if n > 1:
-                    UPDATE = UPDATE + ','
-                UPDATE = UPDATE + " NEWS_" + str(n) + " = " + "'" + str(news) + "'"
             n = n + 1
+
+            if not news:
+                continue
+            if n > 1:
+                UPDATE = UPDATE + ','
+
+            UPDATE = UPDATE + " NEWS_" + str(n) + " = " + "'" + str(news) + "'"
+
         request = UPDATE + "WHERE WORD = '" + WORD + "'"
         return SQLQuery(request)
 
-#функция вызывается при запосе пользователя
+#функция вызывается при запросе пользователя
 def addRequest(WORD, NEWS_LIST):
     if WORD:
         newsList = getContent(WORD)
@@ -92,5 +98,5 @@ def addRequest(WORD, NEWS_LIST):
 
 if __name__ == '__main__':
     #print(insertQuery('Новости сегодня', {'{ddddd}', '{3333}'}))  # dictionary
-    #print(getContent('выы сегодня'))  # dictionary
-    print(addRequest('Новости сегодня', ['{"а": "интересные", "b": "oooo"}', '{новости}']))
+    #print(getContent('вертолет'))  # dictionary
+    #print(addRequest('Новости сегодня', ['{"а": "интересные", "b": "oooo"}', '{новости}']))

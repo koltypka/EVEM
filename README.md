@@ -16,7 +16,7 @@
 ## Язык реализации программного кода
 Python
 ## Описание проекта
-![](https://github.com/koltypka/EVEM/blob/master/img/test.png?raw=true)
+![](https://github.com/koltypka/EVEM/blob/master/img/image.png)
 ## Как установить
 1) Прописав следующую команду в терминале, склонируйте проект себе на устройство:
 ```

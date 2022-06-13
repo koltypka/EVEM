@@ -98,5 +98,5 @@ def addRequest(WORD, NEWS_LIST):
 
 if __name__ == '__main__':
     #print(insertQuery('Новости сегодня', {'{ddddd}', '{3333}'}))  # dictionary
-    #print(getContent('вертолет'))  # dictionary
+    print(getContent('вертолет'))  # dictionary
     #print(addRequest('Новости сегодня', ['{"а": "интересные", "b": "oooo"}', '{новости}']))

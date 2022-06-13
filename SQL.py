@@ -75,21 +75,23 @@ def addRequest(WORD, NEWS_LIST):
         counter = 0
         oldNewsList = []
 
-        for i in range(5):
-            if newsList['NEWS_' + i]:
-                counter = counter + 1
-                oldNewsList.append(newsList['NEWS_' + i])
+        if len(newsList) > 0:
+            for i in range(5):
+                if newsList['NEWS_' + str(i+1)]:
+                    counter = counter + 1
+                    oldNewsList.append(newsList['NEWS_' + str(i+1)])
 
-        if NEWS_LIST.lenght < counter:
-            newsLeftToAdd = counter - NEWS_LIST.lenght
+            newsLeftToAdd = 5 - len(NEWS_LIST)
             for oldNews in oldNewsList:
-                if not newsLeftToAdd:
+                if newsLeftToAdd < 1:
                     break
                 NEWS_LIST.append(oldNews)
+                newsLeftToAdd = newsLeftToAdd - 1
+            return updateQuery(WORD, NEWS_LIST)
         else:
             return insertQuery(WORD, NEWS_LIST)
 
 if __name__ == '__main__':
     #print(insertQuery('Новости сегодня', {'{ddddd}', '{3333}'}))  # dictionary
     #print(getContent('выы сегодня'))  # dictionary
-    #print(updateQuery('Новости сегодня', {'{ddddd}', '{3333}'}))
+    #print(addRequest('Новости сегодня', ['{интересные}', '{новости}']))

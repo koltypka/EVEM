@@ -16,23 +16,27 @@ def getConnection():
 
 def SQLQuery(query):
     connection = getConnection()
+    result = []
     try:
         cursor = connection.cursor()
         cursor.execute(query)
-        connection.commit()
 
-        cursorSaver = cursor
+        if query.split()[0] in ['INSERT', 'DELETE', 'UPDATE']:
+            connection.commit()
+            result.append('SUCCES')
+
+        if query.split()[0] == 'SELECT':
+            for row in cursor:
+                result.append(row)
     finally:
         connection.close()
 
-    return  cursorSaver
+    return  result
 
-def getContent(keyWord, connection):
-    #try:
-        #with connection.cursor() as cursor:
-            # SQL
-            #sql = "SELECT Dept_No, Dept_Name FROM Department"
-    return []
+def getContent(WORD):
+    if WORD:
+        request = "SELECT * FROM INPUT_WORD WHERE WORD = '" + WORD + "'"
+        return SQLQuery(request)
 
 # Функция возвращает динамический запрос на добавление элемента в базу данных
 def insertQuery(WORD, NEWS_LIST):
@@ -50,4 +54,5 @@ def insertQuery(WORD, NEWS_LIST):
         return SQLQuery(request)
 
 if __name__ == '__main__':
-    print(insertQuery('ещё запрос', {'{ddddd}', '{3333}'}))  # dictionary
+    #print(insertQuery('ещё запрос', {'{ddddd}', '{3333}'}))  # dictionary
+    #print(getContent('дед'))  # dictionary

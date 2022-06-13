@@ -44,7 +44,7 @@ def insertQuery(WORD, NEWS_LIST):
     if WORD:
         INSERT = "INSERT INTO INPUT_WORD (WORD"
         VALUES = "VALUES ('" + WORD + "'"
-        n = 1;
+        n = 1
         for news in NEWS_LIST:
             if news:
                 INSERT = INSERT + ", NEWS_" + str(n)
@@ -57,7 +57,6 @@ def insertQuery(WORD, NEWS_LIST):
 def updateQuery(WORD, NEWS_LIST):
     if WORD:
         UPDATE = "UPDATE INPUT_WORD SET"
-        #VALUES = "VALUES ('" + WORD + "'"
         n = 1;
         for news in NEWS_LIST:
             if news:
@@ -94,4 +93,4 @@ def addRequest(WORD, NEWS_LIST):
 if __name__ == '__main__':
     #print(insertQuery('Новости сегодня', {'{ddddd}', '{3333}'}))  # dictionary
     #print(getContent('выы сегодня'))  # dictionary
-    #print(addRequest('Новости сегодня', ['{интересные}', '{новости}']))
+    #print(addRequest('Новости сегодня', ['{"а": "интересные", "b": "oooo"}', '{новости}']))

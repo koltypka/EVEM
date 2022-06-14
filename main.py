@@ -43,7 +43,7 @@ def handle_text(m):
     newsList = logic.search_news(str(m.text.lower()))
     for news in newsList:
         if news:
-            EVEM.send_message(m.chat.id, news['title'] + news['description'].replace('.>', '') + news['link'])
+            EVEM.send_message(m.chat.id, news['title']+ '\n' + news['description'].replace('.>', '') +'\n'+ news['link'])
 
 # Запускаем бота
 EVEM.polling(none_stop=True, interval=0)

@@ -21,8 +21,6 @@ def search_news_list(word, level=70):
         if newsLits:
             for news in newsLits:
                 result.append(news)
-    oldResult = result
-    result = []
 
     if len(result) < 5:
         try:
@@ -61,3 +59,6 @@ def search_news(word, url="https://tverigrad.ru/rss/rssfeed.php?ftype=all", leve
         if t > level or d > level:
             L_news.append(news)
     return L_news
+
+if __name__ == '__main__':
+    print(search_news_list("тверь"))

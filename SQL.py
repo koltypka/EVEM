@@ -87,18 +87,11 @@ def addRequest(WORD, NEWS_LIST):
                     oldNewsList.append(newsList['NEWS_' + str(i+1)])
 
             newsLeftToAdd = 5 - len(NEWS_LIST)
-            for oldNews in json.loads(oldNewsList):
+            for oldNews in oldNewsList:
                 if newsLeftToAdd < 1:
                     break
-                bd_news = json.loads(oldNews)
-                flag = True
-                for news in json.loads(NEWS_LIST):
-                    if oldNews['link'] == news['link']:
-                        flag = False
-                if flag:
-                    NEWS_LIST.append(str(oldNews))
-                    newsLeftToAdd = newsLeftToAdd - 1
+                NEWS_LIST.append(oldNews)
+                newsLeftToAdd = newsLeftToAdd - 1
             return updateQuery(WORD, NEWS_LIST)
         else:
             return insertQuery(WORD, NEWS_LIST)
-

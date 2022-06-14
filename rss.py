@@ -35,9 +35,7 @@ def get_content(soup):  # словарь суп
             title = a.find('title').text
             description = a.find('description').text
             link = a.find('link').text
-            # guid = a.find('guid').text
             pubDate = a.find('pubDate').text
-            # enclosure = a.find('enclosure').text
 
             article = {
                 'title': title,
@@ -63,9 +61,7 @@ def get_content_one(soup):
         title = aa.find('title').text
         description = aa.find('description').text
         link = aa.find('link').text
-        # guid = a.find('guid').text
         pubDate = aa.find('pubDate').text
-        # enclosure = aa.find('enclosure').text
 
         aarticle = {
             'title': title,
@@ -93,23 +89,3 @@ def get_all_rss_news(key_word):
             if len(aarticle_list) > 5:
                 break
     return aarticle_list
-
-if __name__ == '__main__':
-    # s = supchik()
-    #
-    # print(s)  # xml
-    # print()
-    #
-    # d = get_content(s)  # dictionary
-    # print(d)
-    # print(get_content_one())  # dictionary
-    print(get_all_rss_news('word'))  # dictionary
-    # j = json.dumps(d, ensure_ascii=False, indent=4)  # json
-    # print(j)
-    #
-    # dd = json.loads(j)  # dictionary from json
-    # print(json.loads(j))
-    #
-    # save_json_file(d)
-    # print(json.loads(get_File_Data("news.json")))  # dictionary from json file
-

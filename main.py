@@ -1,6 +1,7 @@
 import telebot
 import SQL
 import yamlReader
+import logic
 
 #получаем параметры из yaml файла
 parametrs = yamlReader.getYamlFile('parameters.yaml')
@@ -38,12 +39,11 @@ def myId(m, res=False):
 def handle_text(m):
     if m.chat.id in parametrs['TestIds']:
         EVEM.send_message(m.chat.id, 'вы админ')
-    else:
-        #тут будет отправка полученого сообщения в БД
-        EVEM.send_message(m.chat.id, 'Вы написали:')
 
-    for text in m.text.lower().split():
-        EVEM.send_message(m.chat.id, text)
+    newsList = logic.search_news(str(m.text.lower()))
+    for news in newsList:
+        if news:
+            EVEM.send_message(m.chat.id, news['title'] + news['description'] + news['link'])
 
 # Запускаем бота
 EVEM.polling(none_stop=True, interval=0)

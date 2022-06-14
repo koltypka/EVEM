@@ -25,7 +25,7 @@ def search_news(word, url="https://tverigrad.ru/rss/rssfeed.php?ftype=all", leve
     if len(L_news) < 5:
         try:
             bd_content = SQL.getContent(word)
-            print(bd_content)
+            #print(bd_content)
             for i in range(1, 6):
                 if bd_content['NEWS_'+str(i)] != '':
                     bd_news = json.loads(bd_content['NEWS_'+str(i)])
@@ -51,4 +51,4 @@ def search_news(word, url="https://tverigrad.ru/rss/rssfeed.php?ftype=all", leve
 
 
 if __name__ == '__main__':
-    print(search_news("вертолет"))
+    print(search_news("Тверь"))

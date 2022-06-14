@@ -4,6 +4,27 @@ import SQL
 import json
 import yamlReader
 
+def levenshtein_dist(a, b):
+    def rec(i, j):
+        if i == 0 or j == 0:
+            return max(i, j)
+        elif a[i - 1] == b[j - 1]:
+            return rec(i - 1, j - 1)
+        else:
+            return 1 + min(
+                rec(i, j - 1),
+                rec(i - 1, j),
+                rec(i - 1, j - 1)
+            )
+    return rec(len(a), len(b))
+
+def fu1(word, news):
+    word = word.lower()
+    news = news.lower()
+    lev_dist = levenshtein_dist(word, news)  # distance
+    return ((len(s1) - lev_dist) / len(s1)) * 100  # ratio
+
+
 def fu(word, news):
     word = word.lower()
     news = news.lower()

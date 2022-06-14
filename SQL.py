@@ -59,7 +59,7 @@ def insertQuery(WORD, NEWS_LIST):
 def updateQuery(WORD, NEWS_LIST):
     if WORD:
         UPDATE = "UPDATE INPUT_WORD SET"
-        n = 0;
+        n = 0
         for news in NEWS_LIST:
             n = n + 1
 

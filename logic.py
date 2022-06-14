@@ -9,7 +9,6 @@ def fu(word, news):
     news = news.lower()
     return fuzz.partial_ratio(word, news)
 
-
 def search_news(word, url="https://tverigrad.ru/rss/rssfeed.php?ftype=all", level=70):
     L_news = []
 
@@ -21,11 +20,9 @@ def search_news(word, url="https://tverigrad.ru/rss/rssfeed.php?ftype=all", leve
         if t > level or d > level:
             L_news.append(news)
 
-
     if len(L_news) < 5:
         try:
             bd_content = SQL.getContent(word)
-            #print(bd_content)
             for i in range(1, 6):
                 if bd_content['NEWS_'+str(i)] != '':
                     bd_news = json.loads(bd_content['NEWS_'+str(i)])
@@ -34,7 +31,6 @@ def search_news(word, url="https://tverigrad.ru/rss/rssfeed.php?ftype=all", leve
         except Exception as e:
             print("error search_news")
             print(e)
-
 
     L_add = []
     n = 5
@@ -48,7 +44,3 @@ def search_news(word, url="https://tverigrad.ru/rss/rssfeed.php?ftype=all", leve
         print("error search_news")
         print(e)
     return L_news
-
-
-if __name__ == '__main__':
-    print(search_news("Тверь"))

@@ -40,13 +40,20 @@ def handle_text(m):
     if m.chat.id in parametrs['TestIds']:
         EVEM.send_message(m.chat.id, 'вы админ')
 
-    newsList = logic.search_news_list(str(m.text.lower()))
-    if newsList:
-        for news in newsList:
-            if news:
-                EVEM.send_message(m.chat.id, news['title']+ '\n\n' + news['description'].replace('.>', '') +'\n\n'+ news['link'])
+    oldNewsList = logic.search_news_list(str(m.text.lower()))
+    newsList = []
+    if oldNewsList:
+        for oldElem in oldNewsList:
+            flag = True
+            for newElem in newsList:
+                if newElem['link'] == oldElem['link']:
+                    flag = False
+            if flag:
+                EVEM.send_message(m.chat.id,
+                                  oldElem['title'] + '\n\n' + oldElem['description'].replace('.>', '') + '\n\n' + oldElem['link'])
+                newsList.append(oldElem)
     else:
         EVEM.send_message(m.chat.id, 'Не найдено')
 
-                          # Запускаем бота
+# Запускаем бота
 EVEM.polling(none_stop=True, interval=0)

@@ -21,6 +21,8 @@ def search_news_list(word, level=70):
         if newsLits:
             for news in newsLits:
                 result.append(news)
+    oldResult = result
+    result = []
 
     if len(result) < 5:
         try:

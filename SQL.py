@@ -93,7 +93,7 @@ def addRequest(WORD, NEWS_LIST):
                 bd_news = json.loads(oldNews)
                 flag = True
                 for news in json.loads(NEWS_LIST):
-                    if oldNews['title'] == news['title']:
+                    if oldNews['link'] == news['link']:
                         flag = False
                 if flag:
                     NEWS_LIST.append(str(oldNews))

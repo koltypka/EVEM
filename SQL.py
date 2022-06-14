@@ -1,6 +1,6 @@
 import pymysql.cursors
 import yamlReader
-
+import json
 # Функция возвращает connection.
 def getConnection():
     parametrs = yamlReader.getYamlFile('SQL.yaml')
@@ -87,11 +87,18 @@ def addRequest(WORD, NEWS_LIST):
                     oldNewsList.append(newsList['NEWS_' + str(i+1)])
 
             newsLeftToAdd = 5 - len(NEWS_LIST)
-            for oldNews in oldNewsList:
+            for oldNews in json.loads(oldNewsList):
                 if newsLeftToAdd < 1:
                     break
-                NEWS_LIST.append(oldNews)
-                newsLeftToAdd = newsLeftToAdd - 1
+                bd_news = json.loads(oldNews)
+                flag = True
+                for news in json.loads(NEWS_LIST):
+                    if oldNews['title'] == news['title']:
+                        flag = False
+                if flag:
+                    NEWS_LIST.append(str(oldNews))
+                    newsLeftToAdd = newsLeftToAdd - 1
             return updateQuery(WORD, NEWS_LIST)
         else:
             return insertQuery(WORD, NEWS_LIST)
+

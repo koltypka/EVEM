@@ -44,7 +44,7 @@ def handle_text(m):
     if newsList:
         for news in newsList:
             if news:
-                EVEM.send_message(m.chat.id, news['title'] + "\n\n" + news['description'].replace('.>', '') + '\n\n' + news['link'])
+                EVEM.send_message(m.chat.id, news['title']+ '\n\n' + news['description'].replace('.>', '') +'\n\n'+ news['link'])
     else:
         EVEM.send_message(m.chat.id, 'Не найдено')
 
